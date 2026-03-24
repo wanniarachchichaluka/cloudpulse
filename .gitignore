@@ -1,0 +1,59 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# AWS Credentials
+.aws/
+credentials
+config
+*.pem
+*.csv
+aws_credentials.txt
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Project Reports
+cloudpulse_report_*.txt
+cloudpulse_report_*.csv
+*.log
+*.tmp
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# OS Files
+Thumbs.db
+Desktop.ini
+
+# Secrets
+secrets.py
+config.py
+credentials.py
