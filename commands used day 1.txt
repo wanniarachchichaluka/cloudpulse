@@ -1,0 +1,19 @@
+python -m venv venv
+# Activate virtual environment (Windows)
+.\venv\Scripts\Activate.ps1
+
+# Install required packages
+pip install boto3 tabulate pytest
+
+# Save them to requirements.txt
+pip freeze > requirements.txt
+
+
+# Configure AWS credentials
+aws configure
+
+# Enter when prompted:
+AWS Access Key ID [None]: AKIAXXXXXXXXXXXXXXXX
+AWS Secret Access Key [None]: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Default region name [None]: us-east-1
+Default output format [None]: json
