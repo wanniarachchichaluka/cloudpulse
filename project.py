@@ -15,7 +15,7 @@ def audit_s3():
     ...
 def audit_iam():
     #fetches all IAM users login details
-    #last login > 7 days
+    #last login > 90 days
         #issue
         #return issue list as dict
         #dict contains, iam name, iam id, how many day upto now after last login.
