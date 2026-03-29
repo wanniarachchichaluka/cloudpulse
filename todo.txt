@@ -1,0 +1,4 @@
+need to calculate the running time period = current time - launch time
+launch time from the response : "LaunchTime": "2026-03-28 03:04:23+00:00",
+from date time module
+refer: OOP-seasons.py

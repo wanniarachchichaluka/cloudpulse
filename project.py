@@ -1,4 +1,19 @@
-def audit_ec2():
+import Finding
+threshold_days=7
+import datetime as dt
+def audit_ec2(threshold_days):
+    ec2_client = boto3.client('ec2')
+    response1 = ec2_client.describe_instances()
+    
+    for reservation in response1["Reservations"]:
+        for instance in reservation["Instances"]:
+            instance_id = instance["InstanceId"]
+            current_state = instance["State"]["Name"]
+            launch_time = instance["LaunchTime"]
+            name_tag = instance["Tags"][0]["Value"]
+            launch_time - current_time
+            
+
     #fetches all EC2 using boto3
     #running continuously > 7 days
         #mark as risks
