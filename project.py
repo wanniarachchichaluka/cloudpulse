@@ -19,7 +19,12 @@ def audit_ec2(threshold_days):
                 name_tag = instance["Tags"][0]["Value"]
 
                 tags = instance.get("Tags", []) 
-                name_tag = next((t["Value"] for t in tags if t["Key"] == "Name"), "Unnamed")
+                name_tag = "Unnamed"
+                for t in tags:
+                    if t["Key"] == "Name":
+                        name_tag = t["Value"]
+                        break
+            
 
                 dt=datetime.fromisoformat(launch_time)
                 timestamp = dt.timestamp()
