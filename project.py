@@ -1,18 +1,41 @@
-import Finding
+import sys
+import boto3
+from datetime import datetime, timezone
+from botocore.exceptions import ClientError, NoCredentialsError
+
 threshold_days=7
 import datetime as dt
 def audit_ec2(threshold_days):
-    ec2_client = boto3.client('ec2')
-    response1 = ec2_client.describe_instances()
-    
-    for reservation in response1["Reservations"]:
-        for instance in reservation["Instances"]:
-            instance_id = instance["InstanceId"]
-            current_state = instance["State"]["Name"]
-            launch_time = instance["LaunchTime"]
-            name_tag = instance["Tags"][0]["Value"]
-            launch_time - current_time
-            
+    try:
+        results = []
+        ec2_client = boto3.client('ec2')
+        response1 = ec2_client.describe_instances()
+        
+        for reservation in response1["Reservations"]:
+            for instance in reservation["Instances"]:
+                instance_id = instance["InstanceId"]
+                current_state = instance["State"]["Name"]
+                launch_time = instance["LaunchTime"]
+                name_tag = instance["Tags"][0]["Value"]
+
+                tags = instance.get("Tags", []) 
+                name_tag = next((t["Value"] for t in tags if t["Key"] == "Name"), "Unnamed")
+
+                dt=datetime.fromisoformat(launch_time)
+                timestamp = dt.timestamp()
+                td=datetime.now(timezone.utc)
+                timestamp2 = td.timestamp()
+
+                running_days = int((timestamp2 - timestamp)/60/60/24)
+                if running_days > threshold_days:
+                    results.append(Finding("EC2",instance_id,f"{name_tag} has been running for {running_days} days","LOW"))
+        return results
+    except ClientError as e:
+        sys.exit(f"AWS API error: {e}")
+        return 
+    except boto3.exceptions.NoCredentialsError:
+        sys.exit("Check the AWS config credentials again")
+        return 
 
     #fetches all EC2 using boto3
     #running continuously > 7 days
